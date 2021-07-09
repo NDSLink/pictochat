@@ -13,7 +13,7 @@ MAX_PACKET_LEN: Final[int] = 1024
 NINTENDO_MAC_ADDRESS_PREFIX: Final[bytearray] = bytearray([0x00, 0x09, 0xbf])
 RSSI_PACKET_COUNT: Final[int] = 40
 
-def is_packet_pictochat(buf):
+def is_packet_pictochat(buf: bytearray) -> bool:
     if buf[RADIOTAP_OFFSET + 10:RADIOTAP_OFFSET + 10 + 3] == NINTENDO_MAC_ADDRESS_PREFIX:
         return True
     else:
