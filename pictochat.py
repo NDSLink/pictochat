@@ -2,7 +2,7 @@
 # Credit to https://github.com/Thesola10/PictoChat/blob/master/pcpa/src/decoder.c for most of the important info used here
 from typing import Final
 from socket import socket
-from pylibpcap.pcap import sniff
+from pcap import pcap
 
 RADIOTAP_OFFSET: Final[int] = 64
 PICTOCHAT_OFFSET: Final[int] = 36
@@ -19,6 +19,8 @@ def is_packet_pictochat(buf):
     else:
         return False
 
-for plen, t, buf in sniff("wlan0", count=-1):
-    if is_packet_pictochat(plen, t, buf):
+sniff: pcap.pcap = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms=-1)
+
+for _, buf in sniff:
+    if is_packet_pictochat(buf):
         raise NotImplementedError("Packet comes from Pictochat, but support is not fully implemented")
