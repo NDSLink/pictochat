@@ -23,8 +23,8 @@ def is_packet_pictochat(buf: bytearray) -> bool:
 libpcap.config(LIBPCAP="npcap")
 while True:
     pcap_source = libpcap.pcap_t()
-    hdr_pointer = POINTER(libpcap.pkthdr)()
+    hdr_pointer = pointer(libpcap.pkthdr())
     packet_data = POINTER(POINTER(c_ubyte))()
-    libpcap.next_ex(byref(pcap_source), hdr_pointer, packet_data)
+    libpcap.next_ex(byref(pcap_source), byref(hdr_pointer), packet_data)
     print(type(packet_data))
     print(int.from_bytes(packet_data, 'big'))
