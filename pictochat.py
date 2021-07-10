@@ -19,7 +19,7 @@ def is_packet_pictochat(buf: bytearray) -> bool:
     else:
         return False
 
-sniff: pcap = pcap(promisc=True, immediate=True, timeout_ms=1)
+sniff: pcap = pcap(promisc=True, immediate=True, timeout_ms=50)
 def loop(*args):
     print(f"args: {args}")
 pcap.loop(sniff, 0, loop)
