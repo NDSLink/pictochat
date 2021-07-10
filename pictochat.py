@@ -24,3 +24,5 @@ sniff: pcap.pcap = pcap.pcap(name=None, promisc=True, immediate=True, timeout_ms
 for _, buf in sniff:
     if is_packet_pictochat(buf):
         raise NotImplementedError("Packet comes from Pictochat, but support is not fully implemented")
+else:
+    raise Exception("I couldn't find any Pictochat Packets :(")
