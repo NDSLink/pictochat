@@ -2,8 +2,10 @@
 # Credit to https://github.com/Thesola10/PictoChat/blob/master/pcpa/src/decoder.c for most of the important info used here
 from typing import Final
 from socket import socket
-from pcap import pcap
-
+import libpcap
+from libpcap import next_ex
+from libpcap import pcap_t, pkthdr
+from ctypes import pointer, POINTER, c_ubyte, byref
 RADIOTAP_OFFSET: Final[int] = 64
 PICTOCHAT_OFFSET: Final[int] = 36
 PICTOCHAT_NORMAL_PAYLOAD: Final[int] = 160
@@ -19,7 +21,9 @@ def is_packet_pictochat(buf: bytearray) -> bool:
     else:
         return False
 
-sniff: pcap = pcap(promisc=True, immediate=True, timeout_ms=50)
-def loop(*args):
-    print(f"args: {args}")
-pcap.loop(sniff, 0, loop)
+while True:
+    pcap_source = pcap_t()
+    hdr_pointer = POINTER(POINTER(pkthdr))()
+    packet_data = POINTER(POINTER(c_ubyte))()
+    next_ex(byref(pcap_source), hdr_pointer, packet_data)
+    print(type(packet_data))
