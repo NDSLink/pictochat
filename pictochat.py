@@ -20,10 +20,11 @@ def is_packet_pictochat(buf: bytearray) -> bool:
         return True
     else:
         return False
-
+libpcap.config(LIBPCAP=None)
 while True:
-    pcap_source = pcap_t()
-    hdr_pointer = POINTER(pkthdr)()
+    LP_pcap = POINTER(libpcap.pcap_t)
+    pcap_source = LP_pcap()
+    hdr_pointer = POINTER(libpcap.pkthdr)()
     packet_data = POINTER(POINTER(c_ubyte))()
-    libpcap.next(byref(pcap_source), hdr_pointer)
+    libpcap.next(pcap_source, hdr_pointer)
     print(type(packet_data))
