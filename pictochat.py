@@ -23,7 +23,7 @@ def is_packet_pictochat(buf: bytearray) -> bool:
 
 while True:
     pcap_source = pcap_t()
-    hdr_pointer = POINTER(POINTER(pkthdr))()
+    hdr_pointer = POINTER(pkthdr)()
     packet_data = POINTER(POINTER(c_ubyte))()
-    next_ex(byref(pcap_source), hdr_pointer, packet_data)
+    libpcap.next(byref(pcap_source), hdr_pointer)
     print(type(packet_data))
